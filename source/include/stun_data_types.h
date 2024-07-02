@@ -178,14 +178,23 @@ typedef enum StunAttributeType
 
 /*-----------------------------------------------------------*/
 
-typedef struct StunContext
+typedef struct StunSerializeContext
 {
     uint8_t * pStart;
     size_t totalLength;
     size_t currentIndex;
     uint32_t attributeFlag;
     StunReadWriteFunctions_t readWriteFunctions;
-} StunContext_t;
+} StunSerializeContext_t;
+
+typedef struct StunDeserializeContext
+{
+    const uint8_t * pStart;
+    size_t totalLength;
+    size_t currentIndex;
+    uint32_t attributeFlag;
+    StunReadWriteFunctions_t readWriteFunctions;
+} StunDeserializeContext_t;
 
 /* This cannot be struct StunHeader to avoid collision with the same name in
  * the KVS WebRTC C-SDK. */
@@ -198,7 +207,7 @@ typedef struct StunMessageHeader
 typedef struct StunAttribute
 {
     StunAttributeType_t attributeType;
-    uint8_t * pAttributeValue;
+    const uint8_t * pAttributeValue;
     uint16_t attributeValueLength;
 } StunAttribute_t;
 
