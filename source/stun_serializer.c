@@ -16,31 +16,31 @@
 /*-----------------------------------------------------------*/
 
 /* Static Functions. */
-static StunResult_t CheckAndUpdateAttributeFlag( StunContext_t * pCtx,
+static StunResult_t CheckAndUpdateAttributeFlag( StunSerializeContext_t * pCtx,
                                                  StunAttributeType_t attributeType );
 
-static StunResult_t XorAddress( StunContext_t * pCtx,
+static StunResult_t XorAddress( StunSerializeContext_t * pCtx,
                                 StunAttributeAddress_t * pAddress );
 
-static StunResult_t AddAttributeTypeOnly( StunContext_t * pCtx,
+static StunResult_t AddAttributeTypeOnly( StunSerializeContext_t * pCtx,
                                           StunAttributeType_t attributeType );
 
-static StunResult_t AddAttributeUint32( StunContext_t * pCtx,
+static StunResult_t AddAttributeUint32( StunSerializeContext_t * pCtx,
                                         StunAttributeType_t attributeType,
                                         uint32_t attributeValue );
 
-static StunResult_t AddAttributeUint64( StunContext_t * pCtx,
+static StunResult_t AddAttributeUint64( StunSerializeContext_t * pCtx,
                                         StunAttributeType_t attributeType,
                                         uint64_t attributeValue );
 
-static StunResult_t AddAttributeBuffer( StunContext_t * pCtx,
+static StunResult_t AddAttributeBuffer( StunSerializeContext_t * pCtx,
                                         StunAttributeType_t attributeType,
                                         const uint8_t * pAttributeValueBuffer,
                                         uint16_t attributeValueBufferLength );
 
 /*-----------------------------------------------------------*/
 
-static StunResult_t CheckAndUpdateAttributeFlag( StunContext_t * pCtx,
+static StunResult_t CheckAndUpdateAttributeFlag( StunSerializeContext_t * pCtx,
                                                  StunAttributeType_t attributeType )
 {
     StunResult_t result = STUN_RESULT_OK;
@@ -77,7 +77,7 @@ static StunResult_t CheckAndUpdateAttributeFlag( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-static StunResult_t AddAttributeBuffer( StunContext_t * pCtx,
+static StunResult_t AddAttributeBuffer( StunSerializeContext_t * pCtx,
                                         StunAttributeType_t attributeType,
                                         const uint8_t * pAttributeValueBuffer,
                                         uint16_t attributeValueBufferLength )
@@ -140,7 +140,7 @@ static StunResult_t AddAttributeBuffer( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-static StunResult_t AddAttributeTypeOnly( StunContext_t * pCtx,
+static StunResult_t AddAttributeTypeOnly( StunSerializeContext_t * pCtx,
                                           StunAttributeType_t attributeType )
 {
     StunResult_t result = STUN_RESULT_OK;
@@ -186,7 +186,7 @@ static StunResult_t AddAttributeTypeOnly( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-static StunResult_t AddAttributeUint32( StunContext_t * pCtx,
+static StunResult_t AddAttributeUint32( StunSerializeContext_t * pCtx,
                                         StunAttributeType_t attributeType,
                                         uint32_t attributeValue )
 {
@@ -236,7 +236,7 @@ static StunResult_t AddAttributeUint32( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-static StunResult_t AddAttributeUint64( StunContext_t * pCtx,
+static StunResult_t AddAttributeUint64( StunSerializeContext_t * pCtx,
                                         StunAttributeType_t attributeType,
                                         uint64_t attributeValue )
 {
@@ -286,7 +286,7 @@ static StunResult_t AddAttributeUint64( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-static StunResult_t XorAddress( StunContext_t * pCtx,
+static StunResult_t XorAddress( StunSerializeContext_t * pCtx,
                                 StunAttributeAddress_t * pAddress )
 {
     StunResult_t result = STUN_RESULT_OK;
@@ -325,7 +325,7 @@ static StunResult_t XorAddress( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_Init( StunContext_t * pCtx,
+StunResult_t StunSerializer_Init( StunSerializeContext_t * pCtx,
                                   uint8_t * pBuffer,
                                   size_t bufferLength,
                                   const StunHeader_t * pHeader )
@@ -374,7 +374,7 @@ StunResult_t StunSerializer_Init( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeErrorCode( StunContext_t * pCtx,
+StunResult_t StunSerializer_AddAttributeErrorCode( StunSerializeContext_t * pCtx,
                                                    uint16_t errorCode,
                                                    const uint8_t * pErrorPhrase,
                                                    uint16_t errorPhraseLength )
@@ -450,7 +450,7 @@ StunResult_t StunSerializer_AddAttributeErrorCode( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeChannelNumber( StunContext_t * pCtx,
+StunResult_t StunSerializer_AddAttributeChannelNumber( StunSerializeContext_t * pCtx,
                                                        uint16_t channelNumber )
 {
     StunResult_t result = STUN_RESULT_OK;
@@ -507,7 +507,7 @@ StunResult_t StunSerializer_AddAttributeChannelNumber( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeUseCandidate( StunContext_t * pCtx )
+StunResult_t StunSerializer_AddAttributeUseCandidate( StunSerializeContext_t * pCtx )
 {
     return AddAttributeTypeOnly( pCtx,
                                  STUN_ATTRIBUTE_TYPE_USE_CANDIDATE );
@@ -515,7 +515,7 @@ StunResult_t StunSerializer_AddAttributeUseCandidate( StunContext_t * pCtx )
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeDontFragment( StunContext_t * pCtx )
+StunResult_t StunSerializer_AddAttributeDontFragment( StunSerializeContext_t * pCtx )
 {
     return AddAttributeTypeOnly( pCtx,
                                  STUN_ATTRIBUTE_TYPE_DONT_FRAGMENT );
@@ -523,7 +523,7 @@ StunResult_t StunSerializer_AddAttributeDontFragment( StunContext_t * pCtx )
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributePriority( StunContext_t * pCtx,
+StunResult_t StunSerializer_AddAttributePriority( StunSerializeContext_t * pCtx,
                                                   uint32_t priority )
 {
     return AddAttributeUint32( pCtx,
@@ -533,7 +533,7 @@ StunResult_t StunSerializer_AddAttributePriority( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeFingerprint( StunContext_t * pCtx,
+StunResult_t StunSerializer_AddAttributeFingerprint( StunSerializeContext_t * pCtx,
                                                      uint32_t crc32Fingerprint )
 {
     return AddAttributeUint32( pCtx,
@@ -543,7 +543,7 @@ StunResult_t StunSerializer_AddAttributeFingerprint( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeLifetime( StunContext_t * pCtx,
+StunResult_t StunSerializer_AddAttributeLifetime( StunSerializeContext_t * pCtx,
                                                   uint32_t lifetime )
 {
     return AddAttributeUint32( pCtx,
@@ -553,7 +553,7 @@ StunResult_t StunSerializer_AddAttributeLifetime( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeChangeRequest( StunContext_t * pCtx,
+StunResult_t StunSerializer_AddAttributeChangeRequest( StunSerializeContext_t * pCtx,
                                                        uint32_t changeFlag )
 {
     return AddAttributeUint32( pCtx,
@@ -563,7 +563,7 @@ StunResult_t StunSerializer_AddAttributeChangeRequest( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeIceControlled( StunContext_t * pCtx,
+StunResult_t StunSerializer_AddAttributeIceControlled( StunSerializeContext_t * pCtx,
                                                        uint64_t tieBreaker )
 {
     return AddAttributeUint64( pCtx,
@@ -573,7 +573,7 @@ StunResult_t StunSerializer_AddAttributeIceControlled( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeIceControlling( StunContext_t * pCtx,
+StunResult_t StunSerializer_AddAttributeIceControlling( StunSerializeContext_t * pCtx,
                                                         uint64_t tieBreaker )
 {
     return AddAttributeUint64( pCtx,
@@ -583,7 +583,7 @@ StunResult_t StunSerializer_AddAttributeIceControlling( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeUsername( StunContext_t * pCtx,
+StunResult_t StunSerializer_AddAttributeUsername( StunSerializeContext_t * pCtx,
                                                   const uint8_t * pUsername,
                                                   uint16_t usernameLength )
 {
@@ -595,7 +595,7 @@ StunResult_t StunSerializer_AddAttributeUsername( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeData( StunContext_t * pCtx,
+StunResult_t StunSerializer_AddAttributeData( StunSerializeContext_t * pCtx,
                                               const uint8_t * pData,
                                               uint16_t dataLength )
 {
@@ -607,7 +607,7 @@ StunResult_t StunSerializer_AddAttributeData( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeRealm( StunContext_t * pCtx,
+StunResult_t StunSerializer_AddAttributeRealm( StunSerializeContext_t * pCtx,
                                                const uint8_t * pRealm,
                                                uint16_t realmLength )
 {
@@ -619,7 +619,7 @@ StunResult_t StunSerializer_AddAttributeRealm( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeNonce( StunContext_t * pCtx,
+StunResult_t StunSerializer_AddAttributeNonce( StunSerializeContext_t * pCtx,
                                                const uint8_t * pNonce,
                                                uint16_t nonceLength )
 {
@@ -631,7 +631,7 @@ StunResult_t StunSerializer_AddAttributeNonce( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeRequestedTransport( StunContext_t * pCtx,
+StunResult_t StunSerializer_AddAttributeRequestedTransport( StunSerializeContext_t * pCtx,
                                                             const uint8_t * pRequestedTransport,
                                                             uint16_t requestedTransportLength )
 {
@@ -643,7 +643,7 @@ StunResult_t StunSerializer_AddAttributeRequestedTransport( StunContext_t * pCtx
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeIntegrity( StunContext_t * pCtx,
+StunResult_t StunSerializer_AddAttributeIntegrity( StunSerializeContext_t * pCtx,
                                                    const uint8_t * pIntegrity,
                                                    uint16_t integrityLength )
 {
@@ -655,7 +655,7 @@ StunResult_t StunSerializer_AddAttributeIntegrity( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeAddress( StunContext_t * pCtx,
+StunResult_t StunSerializer_AddAttributeAddress( StunSerializeContext_t * pCtx,
                                                  const StunAttributeAddress_t * pAddress,
                                                  StunAttributeType_t attributeType )
 {
@@ -743,7 +743,7 @@ StunResult_t StunSerializer_AddAttributeAddress( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeMappedAddress( StunContext_t * pCtx,
+StunResult_t StunSerializer_AddAttributeMappedAddress( StunSerializeContext_t * pCtx,
                                                        const StunAttributeAddress_t * pMappedAddress )
 {
     return StunSerializer_AddAttributeAddress( pCtx,
@@ -753,7 +753,7 @@ StunResult_t StunSerializer_AddAttributeMappedAddress( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeResponseAddress( StunContext_t * pCtx,
+StunResult_t StunSerializer_AddAttributeResponseAddress( StunSerializeContext_t * pCtx,
                                                          const StunAttributeAddress_t * pResponseAddress )
 {
     return StunSerializer_AddAttributeAddress( pCtx,
@@ -763,7 +763,7 @@ StunResult_t StunSerializer_AddAttributeResponseAddress( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeSourceAddress( StunContext_t * pCtx,
+StunResult_t StunSerializer_AddAttributeSourceAddress( StunSerializeContext_t * pCtx,
                                                        const StunAttributeAddress_t * pSourceAddress )
 {
     return StunSerializer_AddAttributeAddress( pCtx,
@@ -773,7 +773,7 @@ StunResult_t StunSerializer_AddAttributeSourceAddress( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeChangedAddress( StunContext_t * pCtx,
+StunResult_t StunSerializer_AddAttributeChangedAddress( StunSerializeContext_t * pCtx,
                                                         const StunAttributeAddress_t * pChangedAddress )
 {
     return StunSerializer_AddAttributeAddress( pCtx,
@@ -783,7 +783,7 @@ StunResult_t StunSerializer_AddAttributeChangedAddress( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeChangedReflectedFrom( StunContext_t * pCtx,
+StunResult_t StunSerializer_AddAttributeChangedReflectedFrom( StunSerializeContext_t * pCtx,
                                                               const StunAttributeAddress_t * pReflectedFromAddress )
 {
     return StunSerializer_AddAttributeAddress( pCtx,
@@ -793,7 +793,7 @@ StunResult_t StunSerializer_AddAttributeChangedReflectedFrom( StunContext_t * pC
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeXorMappedAddress( StunContext_t * pCtx,
+StunResult_t StunSerializer_AddAttributeXorMappedAddress( StunSerializeContext_t * pCtx,
                                                           const StunAttributeAddress_t * pMappedAddress )
 {
     return StunSerializer_AddAttributeAddress( pCtx,
@@ -803,7 +803,7 @@ StunResult_t StunSerializer_AddAttributeXorMappedAddress( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeXorPeerAddress( StunContext_t * pCtx,
+StunResult_t StunSerializer_AddAttributeXorPeerAddress( StunSerializeContext_t * pCtx,
                                                         const StunAttributeAddress_t * pPeerAddress )
 {
     return StunSerializer_AddAttributeAddress( pCtx,
@@ -813,7 +813,7 @@ StunResult_t StunSerializer_AddAttributeXorPeerAddress( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_AddAttributeXorRelayedAddress( StunContext_t * pCtx,
+StunResult_t StunSerializer_AddAttributeXorRelayedAddress( StunSerializeContext_t * pCtx,
                                                            const StunAttributeAddress_t * pRelayedAddress )
 {
     return StunSerializer_AddAttributeAddress( pCtx,
@@ -823,7 +823,7 @@ StunResult_t StunSerializer_AddAttributeXorRelayedAddress( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_GetIntegrityBuffer( StunContext_t * pCtx,
+StunResult_t StunSerializer_GetIntegrityBuffer( StunSerializeContext_t * pCtx,
                                                 uint8_t ** ppStunMessage,
                                                 uint16_t * pStunMessageLength )
 {
@@ -857,7 +857,7 @@ StunResult_t StunSerializer_GetIntegrityBuffer( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_GetFingerprintBuffer( StunContext_t * pCtx,
+StunResult_t StunSerializer_GetFingerprintBuffer( StunSerializeContext_t * pCtx,
                                                   uint8_t ** ppStunMessage,
                                                   uint16_t * pStunMessageLength )
 {
@@ -891,7 +891,7 @@ StunResult_t StunSerializer_GetFingerprintBuffer( StunContext_t * pCtx,
 
 /*-----------------------------------------------------------*/
 
-StunResult_t StunSerializer_Finalize( StunContext_t * pCtx,
+StunResult_t StunSerializer_Finalize( StunSerializeContext_t * pCtx,
                                       size_t * pStunMessageLength )
 {
     StunResult_t result = STUN_RESULT_OK;
